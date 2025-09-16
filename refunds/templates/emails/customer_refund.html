@@ -1,0 +1,207 @@
+<!-- templates/emails/customer_refund_status.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refund Request Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header.pending {
+            background-color: #ffc107;
+        }
+        .header.rejected {
+            background-color: #dc3545;
+        }
+        .header.approved {
+            background-color: #28a745;
+        }
+        .header.processed {
+            background-color: #17a2b8;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status-approved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .status-processed {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .detail-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .detail-box h3 {
+            margin-top: 0;
+            color: #28a745;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .info-value {
+            color: #333;
+        }
+        .notes-box {
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header {{ refund_status|lower }}">
+            <h1>📋 Refund Request Update</h1>
+        </div>
+        
+        <div class="content">
+            <p>Hello <strong>{{ customer_name }}</strong>,</p>
+            <p>We have an update on your refund request. Here are the current details:</p>
+            
+            <div class="detail-box">
+                <h3>📋 Request Information</h3>
+                <div class="info-row">
+                    <span class="info-label">Order ID:</span>
+                    <span class="info-value">#{{ order_id }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Product:</span>
+                    <span class="info-value">{{ product_name }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Vendor:</span>
+                    <span class="info-value">{{ vendor_name }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Status:</span>
+                    <span class="info-value">
+                        <span class="status-badge status-{{ refund_status|lower }}">{{ refund_status }}</span>
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Last Updated:</span>
+                    <span class="info-value">{{ update_date }}</span>
+                </div>
+            </div>
+            
+            {% if refund_status == 'Approved' %}
+                <div style="background-color: #d4edda; border: 1px solid #c3e6cb; padding: 15px; border-radius: 4px; margin: 15px 0;">
+                    <h4 style="color: #155724; margin-top: 0;">✅ Great News!</h4>
+                    <p style="color: #155724; margin-bottom: 0;">Your refund request has been approved! The vendor will process your refund according to their refund policy.</p>
+                </div>
+            {% elif refund_status == 'Rejected' %}
+                <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 15px; border-radius: 4px; margin: 15px 0;">
+                    <h4 style="color: #721c24; margin-top: 0;">❌ Request Declined</h4>
+                    <p style="color: #721c24; margin-bottom: 0;">Unfortunately, your refund request has been declined. Please see the notes below for more information.</p>
+                </div>
+            {% elif refund_status == 'Processed' %}
+                <div style="background-color: #d1ecf1; border: 1px solid #bee5eb; padding: 15px; border-radius: 4px; margin: 15px 0;">
+                    <h4 style="color: #0c5460; margin-top: 0;">💰 Refund Processed</h4>
+                    <p style="color: #0c5460; margin-bottom: 0;">Your refund has been processed! You should receive your refund within 5-10 business days, depending on your payment method.</p>
+                </div>
+            {% elif refund_status == 'Pending' %}
+                <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 4px; margin: 15px 0;">
+                    <h4 style="color: #856404; margin-top: 0;">⏳ Under Review</h4>
+                    <p style="color: #856404; margin-bottom: 0;">Your refund request is currently being reviewed. We'll notify you once there's an update.</p>
+                </div>
+            {% endif %}
+            
+            {% if admin_notes %}
+                <div class="detail-box">
+                    <h3>💬 Additional Notes</h3>
+                    <div class="notes-box">
+                        {{ admin_notes }}
+                    </div>
+                </div>
+            {% endif %}
+            
+            {% if refund_status == 'Rejected' %}
+                <p><strong>What's Next?</strong></p>
+                <ul>
+                    <li>Review the reason for decline in the notes above</li>
+                    <li>Contact the vendor directly if you have questions</li>
+                    <li>You may contact our support team if you need assistance</li>
+                </ul>
+            {% elif refund_status == 'Approved' %}
+                <p><strong>What's Next?</strong></p>
+                <ul>
+                    <li>The vendor will process your refund according to their policy</li>
+                    <li>You'll receive another notification once the refund is processed</li>
+                    <li>Refunds typically take 5-10 business days</li>
+                </ul>
+            {% endif %}
+        </div>
+        
+        <div class="footer">
+            <p>This is an automated notification. Please do not reply to this email.</p>
+            <p>If you have any questions, please contact our support team.</p>
+        </div>
+    </div>
+</body>
+</html>

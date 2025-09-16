@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Refund Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #dc3545;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .alert {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .detail-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .detail-box h3 {
+            margin-top: 0;
+            color: #dc3545;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .info-value {
+            color: #333;
+        }
+        .reason-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 New Refund Request</h1>
+        </div>
+        
+        <div class="content">
+            <div class="alert">
+                <strong>Action Required:</strong> A customer has submitted a new refund request for your product.
+            </div>
+            
+            <p>Hello <strong>{{ vendor_name }}</strong>,</p>
+            
+            <p>You have received a new refund request that requires your attention. Please review the details below:</p>
+            
+            <div class="detail-box">
+                <h3>📋 Refund Request Details</h3>
+                <div class="info-row">
+                    <span class="info-label">Request ID:</span>
+                    <span class="info-value">#{{ refund_request_id }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Order ID:</span>
+                    <span class="info-value">#{{ order_id }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Product:</span>
+                    <span class="info-value">{{ product_name }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Request Date:</span>
+                    <span class="info-value">{{ request_date }}</span>
+                </div>
+            </div>
+            
+            <div class="detail-box">
+                <h3>👤 Customer Information</h3>
+                <div class="info-row">
+                    <span class="info-label">Customer Name:</span>
+                    <span class="info-value">{{ customer_name }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">{{ customer_email }}</span>
+                </div>
+            </div>
+            
+            <div class="detail-box">
+                <h3>💬 Refund Reason</h3>
+                <div class="reason-box">
+                    {{ refund_reason }}
+                </div>
+            </div>
+            
+            <p><strong>Next Steps:</strong></p>
+            <ul>
+                <li>Review the refund request carefully</li>
+                <li>Contact the customer if you need additional information</li>
+                <li>Log in to your vendor dashboard to approve or reject this request</li>
+                <li>Process the refund according to your refund policy</li>
+            </ul>
+            
+            <center>
+                <a href="#" class="button">View Refund Request</a>
+            </center>
+        </div>
+        
+        <div class="footer">
+            <p>This is an automated notification. Please do not reply to this email.</p>
+            <p>If you have any questions, please contact our support team.</p>
+        </div>
+    </div>
+</body>
+</html>
