@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from api.serializers import CustomUserSerializer
-from .models import MarketPlaceProduct, Product, Category, ProductSize
+from .models import Product, Category, ProductSize
 
 
 class RecursiveField(serializers.Serializer):

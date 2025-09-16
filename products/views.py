@@ -17,8 +17,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import Product, ProductSize
 import os
 from django.conf import settings
-from .models import MarketPlaceProduct
-from .serializers import MarketPlaceProductSerializer
 from api.models import  CustomUser  # Adjust import paths if needed
 import traceback
 
@@ -457,6 +455,17 @@ def updateProduct(request, pk):
         traceback.print_exc()
         return JsonResponse({"error": str(e)}, status=500)
 
+
+#Search Product (navbar)
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def searchProducts(request):
+    query = request.GET.get("query", "")
+    if not query:
+        return JsonResponse({"results": []})
+    
+    results = Product.objects.filter(name__icontains=query).values("id", "name", "image")[:10]
+    return JsonResponse({"results": list(results)})
 
 ### Delete Product ###
 @api_view(['DELETE'])
