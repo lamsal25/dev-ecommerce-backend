@@ -97,33 +97,3 @@ class ProductSize(models.Model):
     def __str__(self):
         return f"{self.product.name} - {self.size}"
 
-class MarketPlaceProduct(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='marketplace_products_category')
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='marketplace_products_user', default=1)
-    slug = models.SlugField(blank=True, null=True)  
-    name= models.CharField(max_length=255)
-    description = models.TextField()
-    price=  models.CharField(max_length=255)
-    image = models.CharField(max_length=255, default='Unknown url')
-    topImage = models.CharField(max_length=255, default='Unknown url')
-    bottomImage = models.CharField(max_length=255, default='Unknown url')
-    leftImage = models.CharField(max_length=255, default='Unknown url')
-    rightImage = models.CharField(max_length=255, default='Unknown url')
-    stock= models.CharField(max_length=10, default='0')  # Available stock quantity
-    isAvailable = models.BooleanField(default=True)
-    isApproved = models.BooleanField(default=False) 
-    review = models.TextField(blank=True, null=True)
-    rating = models.CharField(max_length=255, blank=True, null=True)
-    created_at  = models.DateTimeField(auto_now_add=True)
-    updated_at  = models.DateTimeField(auto_now=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            base_slug = slugify(self.name)
-            unique_slug = base_slug
-            counter = 1
-            while Product.objects.filter(slug=unique_slug).exists():
-                unique_slug = f"{base_slug}-{counter}"
-                counter += 1
-            self.slug = unique_slug
-        super().save(*args, **kwargs)

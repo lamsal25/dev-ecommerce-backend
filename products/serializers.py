@@ -65,10 +65,3 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 
-class MarketPlaceProductSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)
-    user = CustomUserSerializer(read_only=True)
-
-    class Meta:
-        model = MarketPlaceProduct
-        fields = '__all__'
