@@ -75,6 +75,8 @@ class LoginSerializer(serializers.Serializer):
             user=CustomUser.objects.get(email=identifier)
         except User.DoesNotExist:
             raise serializers.ValidationError({"details": "User doesnt exist."}, code=401)
+        if user.is_superuser==True:
+            raise serializers.ValidationError({"details":"Admin cannot login from here."}, code=401)
         if user.role == "vendor":
             if user.vendor.isApproved==False:
                 raise serializers.ValidationError({"details":"Your account is not approved yet."}, code=401)
