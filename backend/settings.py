@@ -60,7 +60,7 @@ SESSION_COOKIE_SECURE = False
 INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.admin',
-    'users',
+    'users.apps.UsersConfig',   
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -69,7 +69,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'django.contrib.sites',
-    'rest_framework.authtoken',   # Required for django-allauth
+    'rest_framework.authtoken',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -87,10 +87,11 @@ INSTALLED_APPS = [
     'django_filters',
     'advertisements',
     'wishlist',
-    'rewards',  
+    'rewards',
     'faqs',
-    'refunds'
+    'refunds',
 ]
+
     
 
 

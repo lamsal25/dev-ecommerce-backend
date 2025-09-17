@@ -161,7 +161,7 @@ def verifyKhalti(request):
                         "city": partial_order.billing_city
                     },
                     cart_items=partial_order.cart,
-                    total_amount=total_amount,
+                    total_amount=partial_order.total_amount,
                     payment_status='Paid',
                     order_status='completed'
                 )
