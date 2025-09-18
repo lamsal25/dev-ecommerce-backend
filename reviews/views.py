@@ -77,8 +77,14 @@ def delete_product_review(request, review_id):
     except ProductReview.DoesNotExist:
         return Response({"error": "Review not found."}, status=status.HTTP_404_NOT_FOUND)
 
-    # Only the review owner or staff can delete the review
-    if review.user != user and not user.is_staff:
+    # Check if user is the review owner, staff, or superadmin
+    is_authorized = (
+        review.user == user or 
+        user.is_staff or 
+        user.role == "superadmin"  # Assuming you have a role field
+    )
+    
+    if not is_authorized:
         return Response({"error": "Not authorized to delete this review."}, status=status.HTTP_403_FORBIDDEN)
 
     review.delete()

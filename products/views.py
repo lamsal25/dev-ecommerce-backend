@@ -192,7 +192,7 @@ def upload_image_to_supabase(image):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createProduct(request):
-    print("Received data:", request.data)
+    # print("Received data:", request.data)
     try:
         name = request.data.get("name")
         description = request.data.get("description")
@@ -341,7 +341,7 @@ def productByLocation(request, location):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateProduct(request, pk):
-    print("Received data:", request.data)
+    # print("Received data:", request.data)
     try:
         # Get the product instance
         try:
@@ -528,11 +528,11 @@ def checkProductAvailability(request, pk):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def getProductByCategory(request, category_id):
-    print("Category ID:", category_id)
+    # print("Category ID:", category_id)
     try:
         products = Product.objects.filter(category_id=category_id)
         serializer = ProductSerializer(products, many=True)
-        print("Fetched products:", serializer.data)  # Debugging line
+        # print("Fetched products:", serializer.data)  # Debugging line
         return Response({
             "message": "Products fetched successfully",
             "data": serializer.data
@@ -583,7 +583,7 @@ def getProductsByVendor(request):
 @permission_classes([AllowAny])  # Can be AllowAny since we're fetching by vendor ID, not user-specific data
 def getProductsByVendorId(request, pk):
     try:
-        print("Vendor ID:", pk)
+        # print("Vendor ID:", pk)
 
         # check if vendor exists
         if not Vendor.objects.filter(id=pk).exists():
